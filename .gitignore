@@ -1,0 +1,15 @@
+# Temporary office lock files
+~$*.xlsx
+~$*.docx
+~$*.pptx
+
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+env/
+venv/

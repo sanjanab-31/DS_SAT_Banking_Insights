@@ -1,104 +1,89 @@
-# TrustWave Bank: Customer Insight & Service Delivery Analytics (CH08)
+# Bank Customer Insight & Analytics (CH08)
 
-An end-to-end data analytics, machine learning, Excel modeling, and executive presentation project for **TrustWave Bank**.
+> **DS Sprint – Skill Based Assessment 2**  
+> **Course:** Data Science (U23AD491) | **Institution:** Sri Eshwar College of Engineering  
+> **Case Study:** TrustWave Bank – Customer 360 & Service Delivery Analytics
 
 ---
 
-## 📁 Repository Structure
+## 📌 Project Overview
+An end-to-end data analytics and machine learning solution for **TrustWave Bank**. It unifies fragmented operational data across 1,000 customers, diagnoses a severe 58% commercial transaction drop, isolates regional support bottlenecks, and predicts at-risk customer complaints with **97.0% recall**.
+
+---
+
+## 📂 Repository Structure
 
 ```text
 CH08_Bank_Customer_Insight/
-├── data/                                 # Raw input CSV datasets
-│   ├── customers.csv                     # Age band, region, relationship length, segment
-│   ├── accounts.csv                      # Account type, balance band, current balance, open date
-│   ├── transactions.csv                  # Date, amount, transaction type, customer & account IDs
-│   ├── channels.csv                      # Branch, ATM, mobile, internet usage
-│   └── service.csv                       # Case ID, service category, complaint flag, resolution status
+├── data/                             # Raw relational CSV datasets
+│   ├── customers.csv                 # Customer demographics, region & segment
+│   ├── accounts.csv                  # Account types, balances & status
+│   ├── transactions.csv              # Transaction records, amounts & channels
+│   ├── channels.csv                  # Monthly branch, ATM, web & mobile logins
+│   └── service.csv                   # Support tickets, repeat flags & complaints
 ├── outputs/
-│   ├── cleaned_data/                     # Exported cleaned and joined datasets
-│   │   ├── customers_cleaned.csv         # Cleaned customers (imputed relationship length)
-│   │   ├── accounts_cleaned.csv          # Normalized account type labels
-│   │   ├── transactions_cleaned.csv      # Deduplicated transactions & IQR outlier flags
-│   │   ├── channels_cleaned.csv          # Imputed numeric medians and categorical Unknowns
-│   │   ├── service_cleaned.csv           # Treated complaint records & repeat flags
-│   │   └── customer_360_analysis.csv     # Granular Customer 360 master table
-│   └── charts/                           # High-resolution generated charts
-│       ├── chart1_channel_usage.png      # Banking channel totals comparison
-│       ├── chart2_channel_by_age.png     # Channel adoption across age bands
-│       ├── chart3_account_activity_trend.png # Monthly account activity (Current decline)
-│       ├── chart4_complaints_by_region.png   # Regional complaints and complaint rates
-│       ├── chart5_balance_by_segment.png # Deposit balance distribution by segment
-│       └── chart6_repeat_service_requests.png# Service categories driving repeat requests
-├── CH08_Bank_Customer_Insight.ipynb      # Complete executed Jupyter Notebook (VS Code ready)
-├── Bank_Customer_Analysis.xlsx           # Excel Workbook (8 sheets, formulas, dashboard)
-├── run_pipeline.py                       # Python pipeline script generating all outputs
-└── generate_data.py                      # Synthetic data generator script
+│   ├── charts/                       # 6 High-resolution analytical charts (PNG)
+│   └── cleaned_data/                 # Cleaned datasets & customer_360_analysis.csv
+├── Bank_Customer_Analysis.xlsx       # Dynamic 8-sheet Excel Dashboard with formulas
+├── CH08_Bank_Customer_Insight.ipynb  # Master Jupyter Notebook (EDA, ML & Excel generation)
+└── README.md                         # Project documentation
 ```
 
 ---
 
-## 🚀 How to Run in VS Code
+## 🔍 Key Findings (6 Analytical Questions)
 
-1. **Open the project in VS Code**:
-   - Open VS Code, select **File > Open Folder...**, and select `CH08_Bank_Customer_Insight`.
-2. **Select the Python Kernel**:
-   - Open [`CH08_Bank_Customer_Insight.ipynb`](file:///c:/Users/Admin/Downloads/CH08_Bank_Customer_Insight/CH08_Bank_Customer_Insight.ipynb).
-   - In the top right corner of the notebook editor, click **Select Kernel** and choose your Python environment (Python 3.14).
-3. **Run All Cells**:
-   - Click **Run All** (or execute cell-by-cell with `Shift + Enter`). All cells are already pre-executed with visible outputs, statistics, and charts.
-
-Alternatively, execute the pipeline directly from the VS Code integrated terminal:
-```powershell
-python run_pipeline.py
-```
+| # | Business Question | Core Finding | Output Chart |
+|:--|:---|:---|:---|
+| **1** | **Top Channels Used** | **Mobile Banking** leads with 45.8% volume (35,463 tx), while physical branches account for only 8.2%. | `chart1_channel_usage.png` |
+| **2** | **Channel Use by Age** | Youth (18–40) are >72% digital. Seniors (60+) rely heavily on Branches (18 visits/mo) and ATMs (16/mo). | `chart2_channel_by_age.png` |
+| **3** | **Declining Account Types** | **Current Accounts** suffered a **58% volume drop** in 2025 (falling from 280 tx/mo in Jan to 118 in Dec). | `chart3_account_activity_trend.png` |
+| **4** | **Regional Complaints** | **North Region** is the top hotspot with 148 complaints (42.1% complaint rate vs. 22% bank average) and a 40% backlog. | `chart4_complaints_by_region.png` |
+| **5** | **Balance by Segment** | Corporate (median $105k) and Wealth (median $62k) hold 84% of total deposits. Retail median balance is $2,450. | `chart5_balance_by_segment.png` |
+| **6** | **Repeat Service Drivers** | **Password Reset** (61.3% repeat rate) and **Disputed Charges** (48.5%) generate over 50% of support overhead. | `chart6_repeat_service_requests.png` |
 
 ---
 
-## 📊 Summary of Findings (The 6 Business Questions)
+## 🤖 Machine Learning Model Performance
 
-| # | Business Question | Empirical Finding | Visual Chart |
-|---|---|---|---|
-| **1** | **Which banking channels are used most?** | **Mobile Banking** is #1 with 35,463 interactions (45.8% volume), followed by ATM (10,311) and Internet Banking (17,466). Branch visits account for only 8.2%. | `chart1_channel_usage.png` |
-| **2** | **How does channel use differ by age band?** | Young customers (18–40) are heavily digital (>72% digital ratio, ~42 mobile logins/mo). Seniors (60+) rely on physical touchpoints (18 branch visits and 16 ATM trips/mo). | `chart2_channel_by_age.png` |
-| **3** | **Which account types show declining activity?** | **Current Accounts** suffered a **58% decline** in transaction volume over 2025 (dropping from 280 tx/mo in Jan down to 118 in Dec). | `chart3_account_activity_trend.png` |
-| **4** | **Which regions generate more complaints?** | **North region** is the top hotspot, generating 148 complaints and a **42.1% complaint rate** (vs 22% bank average), with high unresolved latency. | `chart4_complaints_by_region.png` |
-| **5** | **How do balances differ by segment?** | **Corporate** (median ~$105,000) and **Wealth** (median ~$62,000) hold the bulk of deposit funds, while **Retail** median balance is ~$2,450. | `chart5_balance_by_segment.png` |
-| **6** | **Which services drive repeated requests?** | **Password Reset** (61.3% repeat rate) and **Disputed Charge** (48.5% repeat rate) drive over 50% of all customer service cases. | `chart6_repeat_service_requests.png` |
+Predicting dissatisfied customers (`has_complaint`) using a **Random Forest Classifier** (`n_estimators=120`, `max_depth=6`, `class_weight='balanced'`):
 
----
-
-## 🤖 Machine Learning Model Results
-
-- **Algorithm**: `RandomForestClassifier(n_estimators=120, max_depth=6, class_weight='balanced')`
-- **Target Variable**: `has_complaint` (Binary: 1 if customer recorded complaint, 0 otherwise)
-- **Validation Scheme**: 75% Train (750 customers) / 25% Stratified Unseen Test (250 customers)
-
-| Metric | Measured Value | Business Interpretation |
-|---|---|---|
-| **Accuracy** | **73.2%** | High baseline correctness on held-out test data |
-| **Precision** | **50.0%** | When flag is raised, 1 in 2 customers has a verified complaint |
+| Metric | Score | Key Interpretation |
+|:---|:---:|:---|
 | **Recall** | **97.0%** | Captures 65 out of 67 actual at-risk complaint customers |
-| **F1-Score** | **0.6599** | Robust harmonic mean balancing precision and recall |
-| **ROC-AUC** | **0.8866** | Outstanding discrimination between complaint and non-complaint profiles |
+| **ROC-AUC** | **0.8866** | Strong discriminative ability between complaint & non-complaint profiles |
+| **Accuracy** | **73.2%** | Solid overall classification accuracy on held-out test data |
+| **F1-Score** | **0.6599** | Balanced trade-off under high class imbalance |
+| **Precision** | **50.0%** | 1 in 2 flagged customers is a verified complaint risk |
 
-**Top Predictive Features**:
-1. `service_request_count` (frequency of support interactions)
-2. `days_since_last_tx` (customer inactivity / recency)
-3. `region_North` (geographic risk exposure)
-4. `mobile_usage` (digital engagement level)
-5. `tx_total_amount` (transaction value volume)
+* **Key Predictors:** `service_request_count`, `days_since_last_tx`, `region_North`, `mobile_usage`, `tx_total_amount`.
 
 ---
 
-## 📑 Excel Workbook Architecture (`Bank_Customer_Analysis.xlsx`)
+## 📊 Excel Analytics Workbook (`Bank_Customer_Analysis.xlsx`)
 
-The workbook contains **8 dedicated sheets**:
-1. `Summary_Dashboard`: KPI Cards, Total Customers, Top Channel, Declining Account, Complaint Hotspot, and 4 embedded visual charts.
-2. `Cleaned_Data`: Master Customer 360 table (1,000 customers × 19 attributes) with formatted currency and numbers.
-3. `Statistical_Summary`: Built with actual dynamic formulas (`=COUNT()`, `=COUNTA()`, `=SUM()`, `=AVERAGE()`, `=MEDIAN()`, `=MIN()`, `=MAX()`, `=STDEV.S()`, `=COUNTIF()`).
-4. `Channel_Analysis`: Channel totals, customer averages, percentage distributions, and age band cross-tabulations.
-5. `Account_Activity`: Monthly transaction activity by account type tracking the Current account decline.
-6. `Complaint_Analysis`: Regional breakdown, customer counts, complaint rates (`=COUNTIF()`), and operational risk ratings.
-7. `Balance_Analysis`: Segment deposit volume, mean and median balances, and deposit share (`=SUMIF()`, `=AVERAGEIF()`).
-8. `Service_Requests`: Request category volume, unique customers, and calculated repeat request friction metrics.
+Built with native Excel formulas and formatting across **8 structured worksheets**:
+1. `Summary_Dashboard`: KPI Cards, visual executive summary & embedded charts.
+2. `Cleaned_Data`: Master Customer 360 dataset (1,000 records × 19 fields).
+3. `Statistical_Summary`: Automated statistical formulas (`COUNT`, `AVERAGE`, `MEDIAN`, `STDEV.S`, `COUNTIF`).
+4. `Channel_Analysis`: Cross-tabulated channel adoption and age demographics.
+5. `Account_Activity`: Monthly transaction volume tracking commercial account decline.
+6. `Complaint_Analysis`: Regional breakdown, unresolved rates, and risk ratings (`COUNTIF`).
+7. `Balance_Analysis`: Segment deposit distribution and share of wallet (`SUMIF`, `AVERAGEIF`).
+8. `Service_Requests`: Ticket volumes, repeat rates, and service friction metrics.
 
+---
+
+## 💡 Strategic Recommendations
+
+1. **North Region Task Force:** Deploy a dedicated Tier-2 dispute resolution pod for North branches targeting a 48-hour resolution SLA to clear the 40% backlog.
+2. **Self-Service & Senior Support:** Roll out in-app biometric password recovery to eliminate the 61.3% repeat reset calls, and establish "Digital Concierge" desks in branches to guide senior customers.
+
+---
+
+## 🚀 How to Run
+
+1. Open the project folder in **VS Code**.
+2. Open [`CH08_Bank_Customer_Insight.ipynb`](CH08_Bank_Customer_Insight.ipynb).
+3. Select your **Python 3.14** kernel and click **Run All**.
+   * It performs EDA, cleans data, trains the ML model, outputs the 6 charts to `outputs/charts/`, and generates `Bank_Customer_Analysis.xlsx`.
